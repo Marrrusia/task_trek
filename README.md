@@ -9,7 +9,6 @@ docker-compose up --build
 Можно запуститить без докера
 pip install -r requirements.txt
 python main.py
-Приложение запустится на http://localhost:8000
 
 **Документация**
 После запуска откройте http://localhost:8000/docs для просмотра документации API.
