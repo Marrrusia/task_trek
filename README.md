@@ -7,7 +7,9 @@
 docker-compose up --build
 
 Можно запуститить без докера
+
 pip install -r requirements.txt
+
 python main.py
 
 **Документация**
