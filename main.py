@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List
 
 # FastAPI и зависимости
 from fastapi import FastAPI, Depends, HTTPException, status
@@ -23,13 +23,11 @@ class task_model(Base):
 # Создание таблиц в базе данных
 Base.metadata.create_all(bind=engine)
 
-
 class task_create(BaseModel):
     """Схема для создания задачи"""
     title: str
     description: str | None = None
     complet: bool = False
-
 
 class task_response(BaseModel):
     """Схема для ответa"""
@@ -42,7 +40,6 @@ class task_response(BaseModel):
 
 # Создаем экземпляр FastAPI
 app = FastAPI(title="Task Manager")
-
 
 # Эндпоинт для создания задачи
 @app.post("/tasks/", tags=["Управление задачами"], response_model=task_response,
@@ -86,9 +83,9 @@ def read_task(task_id: int, db: Session = Depends(get_db)):
          response_description="Обновленная задача")
 def update_task(task_id: int, task_update: task_create, db: Session = Depends(get_db)):  # ← Принимаем схему без ID
     db_task = db.query(task_model).filter(task_model.id == task_id).first() # Поиск задачи в БД
-    if db_task is None:
+    if not db_task:
         raise HTTPException(status_code=404, detail="Задача не найдена")
-    if db_task.complet:
+    if db_task.complet == True:
         raise HTTPException( status_code=status.HTTP_400_BAD_REQUEST,
             detail="Нельзя изменять завершенную задачу")
     update_data = task_update.model_dump(exclude_unset=True) # Передача только переданных полей
@@ -105,7 +102,7 @@ def update_task(task_id: int, task_update: task_create, db: Session = Depends(ge
             response_description="Результат удаления")
 def delete_task(task_id: int, db: Session = Depends(get_db)):
     db_task = db.query(task_model).filter(task_model.id == task_id).first() # Поиск задачи
-    if db_task is None:
+    if not db_task:
         raise HTTPException(status_code=404, detail="Задача не найдена")
     db.delete(db_task) # Удаление
     db.commit()
