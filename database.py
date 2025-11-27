@@ -4,7 +4,7 @@ from sqlalchemy.orm import sessionmaker
 
 
 # Создание движка SQLAlchemy
-engine = create_engine("sqlite:///./todo.db", connect_args={"check_same_thread": False})
+engine = create_engine("sqlite:///./data/todo.db", connect_args={"check_same_thread": False})
 
 # Создание фабрики сессий
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
