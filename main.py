@@ -67,7 +67,7 @@ def update_task(task_id: int, task_update: TaskCreate, db: Session = Depends(get
             description="Удаляет задачу по указанному идентификатору",
             response_description="Результат удаления")
 def delete_task(task_id: int, db: Session = Depends(get_db)):
-    success = TaskCRUD.delete_task(db, task_id) #elfktybt pflfxb
+    success = TaskCRUD.delete_task(db, task_id) #удаление задачи
     if not success:
         raise HTTPException(status_code=404, detail="Задача не найдена")
     return {"message": "Задача успешно удалена"}
