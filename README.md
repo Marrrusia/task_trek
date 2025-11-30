@@ -13,6 +13,7 @@ pip install -r requirements.txt
 python main.py
 
 **Документация**
+
 После запуска откройте http://localhost:8000/docs для просмотра документации API.
 
 **Доступные методы**
